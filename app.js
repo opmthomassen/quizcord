@@ -3,17 +3,15 @@ const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-const Campground = require("./models/campground");
 const Team = require("./models/team");
 const User = require("./models/user");
-const Review = require("./models/review");
 
 const { urlencoded } = require("express");
 const morgan = require("morgan");
 const engine = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const catchAsync = require("./utils/catchAsync");
-const { campgroundSchema } = require("./schemas.js");
+const { userSchema } = require("./schemas.js");
 
 main().catch((err) => console.log(err));
 
@@ -31,8 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
 
-const validateCampground = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
+const validateUser = (req, res, next) => {
+  const { error } = userSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(msg, 400);
@@ -72,12 +70,19 @@ app.get("/campgrounds/new", (req, res) => {
 });
 
 app.post(
-  "/campgrounds",
-  validateCampground,
+  "/users",
+  validateUser,
   catchAsync(async (req, res, next) => {
-    const campground = new Campground(req.body);
-    await campground.save();
-    res.redirect(`/campgrounds/${campground.id}`);
+    const { name } = req.body.user;
+    const age = Math.floor(Math.random() * 99) + 1;
+    const gender = Math.floor(Math.random() * 2) + 1 == 1 ? "Male" : "Female";
+    const user = new User({
+      name: name,
+      gender: gender,
+      age: age,
+    });
+    await user.save();
+    res.redirect("/users/");
   })
 );
 

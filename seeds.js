@@ -14,8 +14,12 @@ async function main() {
 
 //
 
-await Color.deleteMany({});
-await User.deleteMany({});
+const wipe = async () => {
+  await Color.deleteMany({});
+  await User.deleteMany({});
+};
+
+wipe();
 
 const users = [
   {
