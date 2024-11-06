@@ -1,0 +1,71 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a,
+span {
+  color: #0f0e0e;
+  font-family: "Barlow Semi Condensed", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+html {
+}
+
+body {
+  background-color: #fcfbfc;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-family: "Barlow Semi Condensed", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.container {
+  max-width: 1200px;
+  min-width: 800px;
+  margin: auto;
+}
+
+.box {
+  min-height: 100svh;
+}
+
+.navbar li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.navbar {
+  text-align: right;
+}
+
+.logo {
+}
+
+.footer {
+  height: 150px;
+  margin-top: -175px;
+  justify-content: center;
+  display: flex;
+}
+
+.footer span {
+  margin-top: 25px;
+}

@@ -1,0 +1,10 @@
+<%layout('layouts/boilerplate')%>
+
+<h1>All users</h1>
+<ul>
+  <% for(let user of users){ %>
+  <a href="/users/<%=user.id%>"><p class="user"><%=user.name%></p></a>
+  <%}%>
+</ul>
+
+<a href="/">Back home</a>
