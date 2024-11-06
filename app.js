@@ -100,24 +100,25 @@ app.get(
 
 // Edit campground
 app.get(
-  "/campgrounds/:id/edit",
+  "/users/:id/edit",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id);
-    if (!campground) {
-      return next(new ExpressError("Campground not found", 404));
+    const user = await User.findById(id);
+    if (!user) {
+      return next(new ExpressError("User not found", 404));
     }
-    res.render("campgrounds/edit", { campground });
+    res.render("users/edit", { user });
   })
 );
 
 // Save edit
 app.put(
-  "/campgrounds/:id",
+  "/users/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const campground = await Campground.findByIdAndUpdate(id, req.body);
-    res.redirect(`/campgrounds/${campground.id}`);
+    const user = await User.findByIdAndUpdate(id, req.body.user);
+    user.save();
+    res.redirect(`/users/`);
   })
 );
 

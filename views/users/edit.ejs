@@ -2,4 +2,20 @@
 
 <h1>Edit <%=user.name%></h1>
 
+<form action="/users/<%=user.id%>?_method=PUT" method="POST">
+  <label for="name">Name: </label>
+  <input type="text" id="name" name="user[name]" value="<%= user.name  %>" />
+  <label for="age">Age: </label>
+  <input type="text" id="age" name="user[age]" value="<%= user.age  %>" />
+  <label for="gender">Gender: </label>
+  <input
+    type="text"
+    id="gender"
+    name="user[gender]"
+    value="<%= user.gender  %>"
+  />
+
+  <button>Save changes</button>
+</form>
+
 <a href="/users">Back</a>
