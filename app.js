@@ -45,12 +45,6 @@ app.listen(3000, () => {
   console.log("App is listening on port 3000");
 });
 
-// function wrapAsync(fn) {
-//   return function (req, res, next) {
-//     fn(req, res, next).catch((e) => next(e));
-//   };
-// }
-
 // Forside
 app.get("/", async (req, res) => {
   //const users = await quizcord.find({});
@@ -88,14 +82,14 @@ app.post(
 );
 
 app.get(
-  "/campgrounds/:id",
+  "/users/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id);
-    if (!campground) {
-      throw new ExpressError("Campground not found", 404);
+    const user = await User.findById(id);
+    if (!user) {
+      throw new ExpressError("User not found", 404);
     }
-    res.render("campgrounds/show", { campground });
+    res.render("users/edit", { user });
   })
 );
 
@@ -131,12 +125,6 @@ app.delete(
     res.redirect("/campgrounds/");
   })
 );
-
-// app.get("/campgrounds/:id/edit", async (req, res) => {
-//   const { id } = req.params;
-//   const campground = await Campground.findById(id);
-//   res.render("campgrounds/show", { campground });
-// });
 
 app.get("/admin", (req, res) => {
   throw new ExpressError("You are not an admin!", 403);

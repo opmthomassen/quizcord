@@ -6,8 +6,7 @@ h5,
 p,
 a,
 span {
-  color: #0f0e0e;
-  font-family: "Barlow Semi Condensed", sans-serif;
+  color: var(--primary-color);
 }
 
 a {
@@ -26,21 +25,22 @@ html {
 }
 
 body {
-  background-color: #fcfbfc;
+  background-color: var(--secondary-color);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  font-family: "Barlow Semi Condensed", sans-serif;
+  justify-content: center;
 }
 
 h1 {
-  font-family: "Barlow Semi Condensed", sans-serif;
   font-weight: 600;
-  font-style: normal;
 }
 
 .container {
-  max-width: 1200px;
-  min-width: 800px;
-  margin: auto;
+  width: 1400px;
+  min-width: 200px;
+  align-content: center;
+  padding: 20px;
 }
 
 .box {
@@ -68,4 +68,15 @@ h1 {
 
 .footer span {
   margin-top: 25px;
+}
+
+:root {
+  --primary-color: #0f0e0e;
+  --secondry-color: #fcfbfc;
+}
+
+.user {
+  width: 90%;
+  min-width: 50%;
+  background-color: red;
 }
