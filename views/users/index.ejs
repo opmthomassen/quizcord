@@ -22,13 +22,14 @@
 
   <div class="card">
     <div class="card-title">
-      <a href="/users/<%=user.id%>"><p class="user"><%=user.name%></p></a>
+      <p class="user"><%=user.name%></p>
     </div>
     <div class="card-body">
       <ul>
         <li>Age: <%=user.age%></li>
         <li>Gender: <%=user.gender%></li>
       </ul>
+      <a href="/users/<%=user.id%>"><p class="edit-icon">edit</p></a>
     </div>
   </div>
   <%}%>

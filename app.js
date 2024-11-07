@@ -13,6 +13,8 @@ const ExpressError = require("./utils/ExpressError");
 const catchAsync = require("./utils/catchAsync");
 const { userSchema } = require("./schemas.js");
 
+const genders = ["♂ Male", "♀ Female"];
+
 main().catch((err) => console.log(err));
 
 async function main() {
@@ -73,6 +75,7 @@ app.get("/campgrounds/new", (req, res) => {
   res.render("campgrounds/new");
 });
 
+// Add a new user
 app.post(
   "/users",
   validateUser,
@@ -91,6 +94,7 @@ app.post(
   })
 );
 
+// Display user specific info with edits.
 app.get(
   "/users/:id",
   catchAsync(async (req, res, next) => {
@@ -99,22 +103,22 @@ app.get(
     if (!user) {
       throw new ExpressError("User not found", 404);
     }
-    res.render("users/edit", { user });
+    res.render("users/edit", { user, genders });
   })
 );
 
-// Edit campground
-app.get(
-  "/users/:id/edit",
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const user = await User.findById(id);
-    if (!user) {
-      return next(new ExpressError("User not found", 404));
-    }
-    res.render("users/edit", { user });
-  })
-);
+// // Display edit user form
+// app.get(
+//   "/users/:id/edit",
+//   catchAsync(async (req, res, next) => {
+//     const { id } = req.params;
+//     const user = await User.findById(id);
+//     if (!user) {
+//       return next(new ExpressError("User not found", 404));
+//     }
+//     res.render("users/edit", { user, genders });
+//   })
+// );
 
 // Save edit
 app.put(
@@ -127,7 +131,7 @@ app.put(
   })
 );
 
-// Delete campground
+// Delete user
 app.delete(
   "/users/:id",
   catchAsync(async (req, res, next) => {

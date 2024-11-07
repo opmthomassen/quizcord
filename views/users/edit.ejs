@@ -1,25 +1,37 @@
 <%layout('layouts/boilerplate')%>
 
-<h1>Edit <%=user.name%></h1>
+<h2>Edit user</h2>
 
-<form action="/users/<%=user.id%>?_method=PUT" method="POST">
-  <label for="name">Name: </label>
-  <input type="text" id="name" name="user[name]" value="<%= user.name  %>" />
-  <label for="age">Age: </label>
-  <input type="text" id="age" name="user[age]" value="<%= user.age  %>" />
-  <label for="gender">Gender: </label>
-  <input
-    type="text"
-    id="gender"
-    name="user[gender]"
-    value="<%= user.gender  %>"
-  />
+<a href="/">← Back to users</a>
+<div class="spacer"></div>
+<section class="top">
+  <h1>Edit <%=user.name%></h1>
+  <form
+    action="/users/<%=user.id%>?_method=PUT"
+    method="POST"
+    class="user-edit-form"
+  >
+    <label for="name">Name: </label>
+    <input type="text" id="name" name="user[name]" value="<%= user.name  %>" />
+    <label for="age">Age: </label>
+    <input type="text" id="age" name="user[age]" value="<%= user.age  %>" />
 
-  <button class="btn btn-primary">Save changes</button>
-</form>
+    <label for="gender">Choose a gender:</label>
+    <select class="gender-select" name="user[gender]" id="gender">
+      <% for(let gender of genders){ %>
+      <option value="<%=gender%>" <%=user.gender == gender ? 'selected':''%>><%=gender%></option>
+      <% } %>
+    </select>
 
-<form action="/users/<%=user.id%>?_method=DELETE" method="POST">
-  <button class="btn btn-warning">Delete user</button>
-</form>
+    <button class="btn btn-primary">Save changes</button>
+  </form>
+</section>
+<div class="spacer"></div>
+<div class="spacer"></div>
 
-<a href="/users">Back</a>
+<div class="center-wrap">
+  <p>Would you like to permanently delete this user?</p>
+  <form action="/users/<%=user.id%>?_method=DELETE" method="POST">
+    <button class="btn btn-warning">Delete user</button>
+  </form>
+</div>
