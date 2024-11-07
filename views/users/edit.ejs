@@ -15,7 +15,11 @@
     value="<%= user.gender  %>"
   />
 
-  <button>Save changes</button>
+  <button class="btn btn-primary">Save changes</button>
+</form>
+
+<form action="/users/<%=user.id%>?_method=DELETE" method="POST">
+  <button class="btn btn-warning">Delete user</button>
 </form>
 
 <a href="/users">Back</a>

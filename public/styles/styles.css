@@ -1,6 +1,8 @@
 :root {
   --primary-color: #0f0e0e;
-  --secondry-color: #fcfbfc;
+  /*--secondary-color: #fcfbfc;*/
+  --secondary-color: #faf8ef;
+  --soft-white: #fcfbfc;
   --small-screen: 767px;
 }
 
@@ -17,6 +19,7 @@ span {
 
 a {
   text-decoration: none;
+  font-weight: 500;
 }
 
 a:hover {
@@ -84,4 +87,58 @@ h1 {
   .user {
     width: 90%;
   }
+}
+
+/* ******** */
+/* ELEMENTS */
+/* ******** */
+
+/* .btn {
+  background-color: var(--secondary-color);
+  border-radius: 25px;
+  padding: 10px 20px 10px 20px;
+}
+
+.btn:hover {
+  box-shadow: 5px 5px 0px black;
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+} */
+
+.btn {
+  background-color: var(--soft-white);
+  border-radius: 25px;
+  padding: 10px 20px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  box-shadow: -5px 5px 0px black;
+  transform: translate(5px, -5px); /* Flytt knappen  */
+}
+
+.btn:active {
+  box-shadow: 0px 0px 0px black;
+  transform: translate(0px, 0px); /* Flytt knappen  */
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-warning {
+  background-color: #f0c1c1;
+}
+
+input {
+  padding: 10px 20px;
+  border-radius: 25px;
+  background-color: var(--soft-white);
+}
+
+input:focus {
+  border-bottom: 3px solid black;
+  outline: none;
+}
+
+input {
 }

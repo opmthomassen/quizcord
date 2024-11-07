@@ -1,2 +1,11 @@
 <%layout('layouts/boilerplate')%>
 <h1>QuizCord</h1>
+
+<h3>All users</h3>
+<% for (let user of users){%>
+<p><%=user.name%></p>
+<%}%>
+<h3>All teams</h3>
+<% for (let team of teams){%>
+<p><%=team.name%></p>
+<%}%>

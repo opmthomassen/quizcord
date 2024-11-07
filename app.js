@@ -44,10 +44,14 @@ app.listen(3000, () => {
 });
 
 // Forside
-app.get("/", async (req, res) => {
-  //const users = await quizcord.find({});
-  res.render("home");
-});
+app.get(
+  "/",
+  catchAsync(async (req, res) => {
+    const users = await User.find({});
+    const teams = await Team.find({});
+    res.render("home", { users, teams });
+  })
+);
 
 app.get(
   "/users",
@@ -124,11 +128,11 @@ app.put(
 
 // Delete campground
 app.delete(
-  "/campgrounds/:id",
+  "/users/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    await Campground.findByIdAndDelete(id);
-    res.redirect("/campgrounds/");
+    await User.findByIdAndDelete(id);
+    res.redirect("/users/");
   })
 );
 
