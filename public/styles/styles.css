@@ -168,6 +168,7 @@ h1 {
   border: 2px solid black;
   outline: none;
   appearance: none;
+  margin-top: 5px;
 }
 
 .user-edit-form button,
