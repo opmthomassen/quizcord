@@ -89,6 +89,60 @@ h1 {
   }
 }
 
+.spacer {
+  height: 20px;
+}
+
+.wrapper {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1px;
+
+  align-content: flex-start;
+  gap: 20px;
+}
+
+.card {
+  background-color: var(--soft-white);
+  width: 250px;
+}
+
+.card-title {
+  background-color: var(--primary-color);
+  color: var(--soft-white);
+}
+
+.card-title .user {
+  color: var(--soft-white);
+  padding: 10px 0px 10px 20px;
+  margin: 0;
+}
+
+.card-body ul {
+}
+
+.card-body li {
+  display: inline;
+  margin-right: 20px;
+  background-color: white;
+}
+
+.top {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 200px;
+  align-items: center;
+}
+
+.top input {
+  margin-top: 20px;
+  width: 300px;
+}
+
 /* ******** */
 /* ELEMENTS */
 /* ******** */
@@ -120,9 +174,9 @@ h1 {
 }
 
 .btn:active {
-  box-shadow: 0px 0px 0px black;
+  /* box-shadow: 0px 0px 0px black;
   transform: translate(0px, 0px); /* Flytt knappen  */
-  transition: transform 0.1s, box-shadow 0.1s;
+  /* transition: transform 0.1s, box-shadow 0.1s; */
 }
 
 .btn-warning {
@@ -136,7 +190,7 @@ input {
 }
 
 input:focus {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid var(--primary-color);
   outline: none;
 }
 

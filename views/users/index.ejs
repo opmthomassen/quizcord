@@ -1,27 +1,35 @@
 <%layout('layouts/boilerplate')%>
 
-<h1>All users</h1>
+<h2>All users</h2>
+<a href="/">← Back home</a>
+<div class="spacer"></div>
+<section class="top">
+  <h1>Strengthen the horde!</h1>
+  <form action="/users" method="POST">
+    <input
+      type="text"
+      placeholder="Name"
+      autofocus
+      required
+      name="user[name]"
+    />
+    <button class="btn btn-primary">Add user</button>
+  </form>
+</section>
 
-<form action="/users" method="POST">
-  <label for="name">Strengthen the horde</label>
-  <input type="text" placeholder="Name" autofocus required name="user[name]" />
-  <button class="btn btn-primary">Add user</button>
-</form>
-
-<ul>
+<div class="wrapper">
   <% for(let user of users){ %>
+
   <div class="card">
     <div class="card-title">
       <a href="/users/<%=user.id%>"><p class="user"><%=user.name%></p></a>
     </div>
     <div class="card-body">
       <ul>
-        <li><%=user.age%></li>
-        <li><%=user.gender%></li>
+        <li>Age: <%=user.age%></li>
+        <li>Gender: <%=user.gender%></li>
       </ul>
     </div>
   </div>
   <%}%>
-</ul>
-
-<a href="/">Back home</a>
+</div>
