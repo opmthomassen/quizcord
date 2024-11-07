@@ -1,9 +1,10 @@
 <%layout('layouts/boilerplate')%>
+
 <div class="hero"><h1>QuizCord</h1></div>
 <div class="center-wrap">
   <h2>Divide and conquer</h2>
   <label for="teamsSlider">Select number of teams</label>
-  <h3 id="numberOfTeams">6</h3>
+  <h3 id="teamCount">6</h3>
   <input
     type="range"
     name="teamsSlider"
@@ -14,16 +15,23 @@
     value="<%=Math.floor(users.length/2)%>"
   />
 
-  <button class="btn btn-primary">Divide</button>
+  <button id="divideBtn" class="btn btn-primary">Divide</button>
 </div>
 <div class="spacer"></div>
-<h2>All users: <%=users.length%></h2>
+<h2>All users</h2>
+<a href="/users" class="<%= users && users.length > 0 ? '' : 'hide' %>"
+  >View all <%=users.length%> users</a
+>
 <div class="wrapper">
   <% for (let user of users){%>
   <p><%=user.name%></p>
-  <%}%>
+  <% } %>
 </div>
+
 <h3>All teams</h3>
+<a href="/teams" class="<%= teams && teams.length > 0 ? '' : 'hide' %>"
+  >View all teams</a
+>
 <div class="wrapper">
   <% for (let team of teams){%>
   <p><%=team.name%></p>
@@ -31,12 +39,17 @@
 </div>
 
 <script>
-  var slider = document.getElementById("teamsSlider");
-  var output = document.getElementById("numberOfTeams");
+  let slider = document.getElementById("teamsSlider");
+  let output = document.getElementById("teamCount");
+  let divideBtn = document.getElementById("divideBtn");
   output.innerHTML = slider.value; // Display the default slider value
 
   // Update the current slider value (each time you drag the slider handle)
   slider.oninput = function () {
     output.innerHTML = this.value;
+  };
+
+  divideBtn.onclick = () => {
+    window.location.href = `/populate/${slider.value}`;
   };
 </script>

@@ -107,19 +107,6 @@ app.get(
   })
 );
 
-// // Display edit user form
-// app.get(
-//   "/users/:id/edit",
-//   catchAsync(async (req, res, next) => {
-//     const { id } = req.params;
-//     const user = await User.findById(id);
-//     if (!user) {
-//       return next(new ExpressError("User not found", 404));
-//     }
-//     res.render("users/edit", { user, genders });
-//   })
-// );
-
 // Save edit
 app.put(
   "/users/:id",
@@ -138,6 +125,24 @@ app.delete(
     const { id } = req.params;
     await User.findByIdAndDelete(id);
     res.redirect("/users/");
+  })
+);
+
+// Populate teams
+app.get(
+  "/populate/:teamCount",
+  catchAsync(async (req, res, next) => {
+    const { teamCount } = req.params;
+    let allUsers = await User.find();
+
+    const shuffledUsers = shuffleArray(allUsers);
+    console.log(shuffledUsers);
+
+    let counter = 0;
+
+    for (let i = 0; i <= shuffledUsers; i++) {}
+
+    res.redirect("/");
   })
 );
 
@@ -163,3 +168,11 @@ app.use((err, req, res, next) => {
 app.get("*", (req, res) => {
   res.render("notfound");
 });
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Velg et tilfeldig indeks fra 0 til i
+    [array[i], array[j]] = [array[j], array[i]]; // Bytt om elementene
+  }
+  return array;
+}

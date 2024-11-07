@@ -95,6 +95,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-user-select: none;
 }
 
 .hero h1 {
@@ -285,10 +286,6 @@ select {
   outline: none;
 }
 
-#numberOfTeams {
-  margin: 0;
-}
-
 #teamsSlider:hover,
 #teamsSlider:focus {
   border: none;
@@ -302,4 +299,8 @@ select {
   border-radius: 50%;
   background: var(--soft-white);
   cursor: pointer;
+}
+
+.hide {
+  display: none;
 }
