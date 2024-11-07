@@ -41,8 +41,10 @@ body {
   justify-content: center;
 }
 
-h1 {
-  font-weight: 600;
+h1,
+h2,
+h3 {
+  font-weight: 500;
 }
 
 .container {
@@ -63,20 +65,43 @@ h1 {
 
 .navbar {
   text-align: right;
+  position: relative;
+  height: 50px;
 }
 
 .logo {
+  position: absolute;
+  left: 0;
+  top: -10px;
+  font-size: 2rem;
 }
 
 .footer {
   height: 150px;
-  margin-top: -175px;
   justify-content: center;
   display: flex;
 }
 
 .footer span {
   margin-top: 25px;
+}
+
+.hero {
+  height: 350px;
+  width: 100%;
+  background-image: radial-gradient(black 1px, transparent 0);
+  background-size: 10px 10px;
+  background-position: -19px -19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero h1 {
+  color: var(--secondary-color);
+  font-size: 14rem;
+  /* -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #0f0e0e0f; */
 }
 
 .user {
@@ -86,6 +111,10 @@ h1 {
 @media (max-width: 767px) {
   .user {
     width: 90%;
+  }
+
+  .hero h1 {
+    font-size: 7rem;
   }
 }
 
