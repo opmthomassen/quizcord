@@ -4,7 +4,18 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   name: String,
   gender: String,
-  age: Number,
+  gender: [
+    {
+      type: String,
+      enum: ["♂ Male", "♀ Female"],
+    },
+  ],
+  age: [
+    {
+      type: Number,
+      min: 0,
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

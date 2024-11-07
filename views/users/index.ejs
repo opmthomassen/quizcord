@@ -10,11 +10,17 @@
 
 <ul>
   <% for(let user of users){ %>
-  <a href="/users/<%=user.id%>"><p class="user"><%=user.name%></p></a>
-  <ul>
-    <li><%=user.age%></li>
-    <li><%=user.gender%></li>
-  </ul>
+  <div class="card">
+    <div class="card-title">
+      <a href="/users/<%=user.id%>"><p class="user"><%=user.name%></p></a>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><%=user.age%></li>
+        <li><%=user.gender%></li>
+      </ul>
+    </div>
+  </div>
   <%}%>
 </ul>
 

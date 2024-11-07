@@ -79,7 +79,8 @@ app.post(
   catchAsync(async (req, res, next) => {
     const { name } = req.body.user;
     const age = Math.floor(Math.random() * 99) + 1;
-    const gender = Math.floor(Math.random() * 2) + 1 == 1 ? "Male" : "Female";
+    const gender =
+      Math.floor(Math.random() * 2) + 1 == 1 ? "♂ Male" : "♀ Female";
     const user = new User({
       name: name,
       gender: gender,

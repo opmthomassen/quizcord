@@ -25,27 +25,27 @@ const users = [
   {
     name: "Fredrik",
     age: 23,
-    gender: "Male",
+    gender: "♂ Male",
   },
   {
     name: "Ole Petter",
     age: 83,
-    gender: "Male",
+    gender: "♂ Male",
   },
   {
     name: "Jonathan",
     age: 17,
-    gender: "Male",
+    gender: "♂ Male",
   },
   {
     name: "ElisabetH",
     age: 40,
-    gender: "Female",
+    gender: "♀ Female",
   },
   {
     name: "Nhatalie",
     age: 37,
-    gender: "Female",
+    gender: "♀ Female",
   },
 ];
 
