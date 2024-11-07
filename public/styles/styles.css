@@ -277,3 +277,29 @@ select {
   background-color: var(--soft-white);
   width: 100%;
 }
+
+#teamsSlider {
+  -webkit-appearance: none;
+  height: 1px;
+  background: var(--primary-color);
+  outline: none;
+}
+
+#numberOfTeams {
+  margin: 0;
+}
+
+#teamsSlider:hover,
+#teamsSlider:focus {
+  border: none;
+}
+
+#teamsSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--soft-white);
+  cursor: pointer;
+}
