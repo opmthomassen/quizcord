@@ -137,9 +137,18 @@ app.delete(
 app.get(
   "/teams/",
   catchAsync(async (req, res, next) => {
-    const { id } = req.params;
     const teams = await Team.find({});
     res.render("teams/", { teams });
+  })
+);
+
+// Show all teams
+app.get(
+  "/teams/:id",
+  catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    const team = await Team.findById(id);
+    res.render("teams/edit", { team });
   })
 );
 
@@ -148,7 +157,8 @@ app.post(
   "/teams/",
   catchAsync(async (req, res, next) => {
     const { name, hex } = await jotunFunc();
-    const team = new Team({ name, color: hex, score: 0 });
+    const randomScore = Math.floor(Math.random() * 99);
+    const team = new Team({ name, color: hex, score: randomScore });
     team.save();
 
     res.redirect("/teams/");

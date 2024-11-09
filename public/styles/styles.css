@@ -219,7 +219,14 @@ h3 {
   width: 300px;
 }
 
-.user-edit-form {
+.edit-form {
+  width: 40%;
+}
+
+@media (max-width: 767px) {
+  .edit-form {
+    width: 90%;
+  }
 }
 
 .gender-select {
@@ -230,24 +237,24 @@ h3 {
   margin-top: 5px;
 }
 
-.user-edit-form button,
-.user-edit-form input {
+.edit-form button,
+.edit-form input {
   box-sizing: border-box;
 }
 
-.user-edit-form button {
+.edit-form button {
   margin-top: 30px;
   width: 100%;
 }
 
-.user-edit-form input {
+.edit-form input {
   display: block;
   margin-top: 5px;
   margin-bottom: 20px;
   width: 100%;
 }
 
-.user-edit-form label {
+.edit-form label {
 }
 
 /* ******** */
