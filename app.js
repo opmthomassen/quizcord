@@ -129,6 +129,26 @@ app.delete(
   })
 );
 
+app.get("/statistics", async (req, res) => {
+  try {
+    const data = await Team.find({}); // Bytt ut 'MyModel' med din modell
+    const scores = data.map((item) => item.score); // Hent de spesifikke feltene du vil bruke
+    const labels = data.map((item) => item.name); // Hent labels (f.eks. navn eller kategorier)
+    const colors = data.map((item) => item.color); // Hent labels (f.eks. navn eller kategorier)
+    res.render("statistics", { scores, labels, colors });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching data");
+  }
+});
+
+app.get(
+  "/history/",
+  catchAsync(async (req, res, next) => {
+    res.render("history/");
+  })
+);
+
 // ***********
 // ***TEAMS***
 // ***********

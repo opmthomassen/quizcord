@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+
+<h2>All Statistics</h2>
+<a href="/">← Back home</a>
+<section class="top">
+  <h1>Enlight the Bright!</h1>
+  <button class="btn btn-primary" id="unlock">Knowledge me</button>
+</section>
+
+<div>
+  <canvas id="myChart" class="hide"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Hent data fra EJS-variabler
+  let labels = "<%= labels %>";
+  let scores = "<%= scores  %>";
+  let colors = "<%= colors  %>";
+
+  labels = labels.split(",");
+  scores = scores.split(",");
+  colors = colors.split(",");
+
+  // Konfigurer Chart.js
+  const ctx = document.getElementById("myChart").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Team score",
+          data: scores,
+          backgroundColor: colors,
+          borderColor: colors,
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+</script>
+
+<div class="wrapper">
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint explicabo
+    nostrum dignissimos saepe quam. Voluptas explicabo recusandae similique,
+    facere enim voluptate autem aut ad illo ea corporis minima nihil rem!
+  </p>
+</div>
