@@ -163,10 +163,30 @@ h3 {
   font-size: 0.8em;
 }
 
-.card-title .user {
+.card-title .user,
+.card-title .team-name {
   color: var(--soft-white);
-  padding: 10px 0px 10px 20px;
   margin: 0;
+}
+
+.card-title .user {
+  padding: 10px 0px 10px 20px;
+}
+
+.team-name {
+  padding: 20px 0px 20px 20px;
+}
+.team-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.team-icon {
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  border-radius: 50%;
 }
 
 .card-body {
@@ -175,6 +195,15 @@ h3 {
 .card-body li {
   display: inline;
   margin-right: 20px;
+}
+
+.team-card {
+  width: 400px;
+}
+
+.team-card li {
+  display: block;
+  margin-bottom: 5px;
 }
 
 .top {

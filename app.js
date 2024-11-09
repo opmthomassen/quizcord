@@ -12,6 +12,7 @@ const engine = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const catchAsync = require("./utils/catchAsync");
 const { userSchema } = require("./schemas.js");
+const jotunFunc = require("./utils/jotun");
 
 const genders = ["♂ Male", "♀ Female"];
 
@@ -128,6 +129,32 @@ app.delete(
   })
 );
 
+// ***********
+// ***TEAMS***
+// ***********
+
+// Show all teams
+app.get(
+  "/teams/",
+  catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    const teams = await Team.find({});
+    res.render("teams/", { teams });
+  })
+);
+
+// Generate team
+app.post(
+  "/teams/",
+  catchAsync(async (req, res, next) => {
+    const { name, hex } = await jotunFunc();
+    const team = new Team({ name, color: hex, score: 0 });
+    team.save();
+
+    res.redirect("/teams/");
+  })
+);
+
 // Populate teams
 app.get(
   "/populate/:teamCount",
@@ -138,9 +165,10 @@ app.get(
     const shuffledUsers = shuffleArray(allUsers);
     console.log(shuffledUsers);
 
-    let counter = 0;
+    let restCounter = allUsers.length % teamCount; // rest
+    let basePerTeam = Math.floor(allUsers.length / teamCount); // base per team.
 
-    for (let i = 0; i <= shuffledUsers; i++) {}
+    for (let i = 0; i <= teamCount; i++) {}
 
     res.redirect("/");
   })

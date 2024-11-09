@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("./models/user");
 const Team = require("./models/team");
-const Color = require("./models/color");
+const Jotun = require("./models/jotun");
 
 main().catch((err) => console.log(err));
 
@@ -15,8 +15,9 @@ async function main() {
 //
 
 const wipe = async () => {
-  await Color.deleteMany({});
+  await Jotun.deleteMany({});
   await User.deleteMany({});
+  await Team.deleteMany({});
 };
 
 wipe();
@@ -51,7 +52,7 @@ const users = [
 
 User.insertMany(users);
 
-const colors = [
+const jotunArr = [
   { name: "Comfort Grey", hex: "#BEB9AF" },
   { name: "Kokos", hex: "#E3DDCD" },
   { name: "Ascott", hex: "#C8C3B8" },
@@ -276,4 +277,4 @@ const colors = [
   { name: "Dusty Purple", hex: "#7D6668" },
 ];
 
-Color.insertMany(colors);
+Jotun.insertMany(jotunArr);
