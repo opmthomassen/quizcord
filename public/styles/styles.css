@@ -21,12 +21,20 @@ a {
   text-decoration: none;
   font-weight: 500;
 }
-
 a:hover {
-  text-decoration: underline;
 }
 
 .link {
+  border-bottom: 2px solid black;
+  padding-bottom: 2px;
+}
+
+.nav-links a:hover {
+  border-bottom: 2px solid black;
+  padding-bottom: 2px;
+}
+
+.logo:hover {
   text-decoration: underline;
 }
 
@@ -305,7 +313,19 @@ h3 {
 }
 
 .btn-warning {
-  background-color: #f0c1c1;
+  /* background-color: #f0c1c1; */
+  border: 0px;
+  color: #e86966;
+  background-color: var(--secondary-color);
+}
+
+.btn-warning:hover {
+  border-bottom: 2px solid #e86966;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+.btn-save {
+  background-color: #beddb1;
 }
 
 input {
@@ -350,4 +370,21 @@ select {
 
 .hide {
   display: none;
+}
+
+.activate-user {
+}
+
+.activate-user {
+}
+
+.deactivate-user:hover {
+  caret-color: red;
+  color: red;
+  cursor: s-resize;
+}
+
+.activate-user:hover {
+  color: red;
+  cursor: n-resize;
 }

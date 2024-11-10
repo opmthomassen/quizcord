@@ -16,13 +16,43 @@
   </form>
 </section>
 
+<h3>Active roster</h3>
 <div class="wrapper">
-  <% for(let user of users){ %>
+  <% for(let user of activeUsers){ %>
 
   <div class="card">
-    <div class="card-title">
-      <p class="user"><%=user.name%></p>
+    <a
+      class="deactivate-user"
+      href="/changeActiveStatus/<%=user.id%>?active=false"
+    >
+      <div class="card-title">
+        <p class="user"><%=user.name%></p>
+      </div></a
+    >
+    <div class="card-body">
+      <ul>
+        <li>Age: <%=user.age%></li>
+        <li>Gender: <%=user.gender%></li>
+      </ul>
+      <a href="/users/<%=user.id%>"><p class="edit-icon">edit</p></a>
     </div>
+  </div>
+  <%}%>
+</div>
+<h3>Inactive roster</h3>
+<div class="wrapper">
+  <% for(let user of inactiveUsers){ %>
+
+  <div class="card">
+    <a
+      class="activate-user"
+      href="/changeActiveStatus/<%=user.id%>?active=true"
+    >
+      <div class="card-title">
+        <p class="user"><%=user.name%></p>
+      </div></a
+    >
+    <div class="card"></div>
     <div class="card-body">
       <ul>
         <li>Age: <%=user.age%></li>

@@ -13,6 +13,7 @@ const ExpressError = require("./utils/ExpressError");
 const catchAsync = require("./utils/catchAsync");
 const { userSchema } = require("./schemas.js");
 const jotunFunc = require("./utils/jotun");
+const { Serializer } = require("v8");
 
 const genders = ["♂ Male", "♀ Female"];
 
@@ -59,22 +60,25 @@ app.get(
 app.get(
   "/users",
   catchAsync(async (req, res) => {
-    const users = await User.find({});
-    res.render("users/", { users });
+    const activeUsers = await User.find({ active: true });
+    const inactiveUsers = await User.find({ active: false });
+    res.render("users/", { activeUsers, inactiveUsers });
   })
 );
 
 app.get(
-  "/campgrounds",
+  "/changeActiveStatus/:id",
   catchAsync(async (req, res) => {
-    const campgrounds = await Campground.find({});
-    res.render("campgrounds/", { campgrounds });
+    console.log(req.params);
+    const { id } = req.params;
+    const { active } = req.query;
+    const user = await User.findById(id);
+    user.active = active;
+    user.save();
+    //const inactiveUsers = await User.find({ active: false });
+    res.redirect("/users/");
   })
 );
-
-app.get("/campgrounds/new", (req, res) => {
-  res.render("campgrounds/new");
-});
 
 // Add a new user
 app.post(
@@ -89,6 +93,7 @@ app.post(
       name: name,
       gender: gender,
       age: age,
+      active: true,
     });
     await user.save();
     res.redirect("/users/");
@@ -113,9 +118,15 @@ app.put(
   "/users/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id, req.body.user);
+    const { active } = req.body.user;
+    const user = await User.findById(id);
+    // user.name = name ? name : user.name;
+    // user.age = age ? age : user.age;
+    // user.gender = gender ? gender : user.gender;
+    user.active = active ? active : user.active;
+
     user.save();
-    res.redirect(`/users/`);
+    res.redirect("/users/");
   })
 );
 
@@ -208,6 +219,11 @@ app.get("/admin", (req, res) => {
   throw new ExpressError("You are not an admin!", 403);
 });
 
+app.get("/test", (req, res) => {
+  console.log(req.query);
+  res.send(req.query);
+});
+
 app.all(/(.*)/, (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
@@ -216,6 +232,7 @@ app.use((err, req, res, next) => {
   console.log("***************************");
   console.log("***********ERROR***********");
   console.log("***************************");
+  console.log(err);
 
   const { status = 500 } = err;
   if (!err.message) err.message = "Oh no, something went wrong";

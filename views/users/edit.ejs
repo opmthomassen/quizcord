@@ -22,7 +22,7 @@
       <% } %>
     </select>
 
-    <button class="btn btn-primary">Save changes</button>
+    <button class="btn btn-primary btn-save">Save changes</button>
   </form>
 </section>
 <div class="spacer"></div>
@@ -31,6 +31,6 @@
 <div class="center-wrap">
   <p>Would you like to permanently delete this user?</p>
   <form action="/users/<%=user.id%>?_method=DELETE" method="POST">
-    <button class="btn btn-warning">Delete user</button>
+    <button class="btn-warning">Delete user</button>
   </form>
 </div>

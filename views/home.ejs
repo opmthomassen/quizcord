@@ -19,17 +19,23 @@
 </div>
 <div class="spacer"></div>
 <h2>All users</h2>
-<a href="/users" class="<%= users && users.length > 0 ? '' : 'hide' %>"
+<a href="/users" class="link <%= users && users.length > 0 ? '' : 'hide' %>"
   >View all <%=users.length%> users</a
 >
 <div class="wrapper">
   <% for (let user of users){%>
-  <p><%=user.name%></p>
+  <input
+    type="checkbox"
+    id="check-<%=user.name%>"
+    name="user[active]"
+    value="<%=user.name%>"
+  />
+  <label for="check-<%=user.name%>"><%=user.name%></label>
   <% } %>
 </div>
 
 <h3>All teams</h3>
-<a href="/teams" class="<%= teams && teams.length > 0 ? '' : 'hide' %>"
+<a href="/teams" class="link <%= teams && teams.length > 0 ? '' : 'hide' %>"
   >View all teams</a
 >
 <div class="wrapper">
@@ -43,13 +49,29 @@
   let output = document.getElementById("teamCount");
   let divideBtn = document.getElementById("divideBtn");
   output.innerHTML = slider.value; // Display the default slider value
+  let teamCount = output.innerHTML;
 
   // Update the current slider value (each time you drag the slider handle)
   slider.oninput = function () {
     output.innerHTML = this.value;
+    teamCount = this.value;
   };
 
   divideBtn.onclick = () => {
-    window.location.href = `/populate/${slider.value}`;
+    //window.location.href = `/populate/${slider.value}`;¨
+    run();
   };
+
+  function run() {
+    let xhr = new XMLHttpRequest();
+    let url = `http://localhost:3000/test?teamCount=${teamCount}`;
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+      }
+    };
+    xhr.send();
+  }
+  run();
 </script>
