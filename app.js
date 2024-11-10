@@ -14,7 +14,7 @@ const catchAsync = require("./utils/catchAsync");
 const { userSchema } = require("./schemas.js");
 const jotunFunc = require("./utils/jotun");
 const { Serializer } = require("v8");
-const categories = require("./utils/categories");
+const { categories } = require("./utils/categories");
 
 const genders = ["♂ Male", "♀ Female"];
 
@@ -33,6 +33,11 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
+
+app.use(
+  "/favicon-dark.png",
+  express.static(path.join(__dirname, "resources/favicon-dark.png"))
+);
 
 const validateUser = (req, res, next) => {
   const { error } = userSchema.validate(req.body);
@@ -205,7 +210,7 @@ app.get(
     let allUsers = await User.find();
 
     const shuffledUsers = shuffleArray(allUsers);
-    console.log(shuffledUsers);
+    //console.log(shuffledUsers);
 
     let restCounter = allUsers.length % teamCount; // rest
     let basePerTeam = Math.floor(allUsers.length / teamCount); // base per team.
@@ -223,7 +228,7 @@ app.get(
 
     const users = await User.find({});
     const teams = await Team.find({});
-    res.render("admin", { users, teams });
+    res.render("admin", { users, teams, categories });
   })
 );
 

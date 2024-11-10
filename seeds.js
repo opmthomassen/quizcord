@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const User = require("./models/user");
 const Team = require("./models/team");
 const Jotun = require("./models/jotun");
-const categories = requirer("./utils/categories");
+const categories = require("./utils/categories");
 
 main().catch((err) => console.log(err));
 

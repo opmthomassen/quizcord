@@ -141,7 +141,7 @@ h3 {
 }
 
 .spacer {
-  height: 20px;
+  height: 40px;
 }
 
 .wrapper {
@@ -244,9 +244,21 @@ h3 {
   width: 40%;
 }
 
+.score-form input {
+}
+
+.score-form button {
+}
+
 @media (max-width: 767px) {
   .edit-form {
     width: 90%;
+  }
+}
+
+@media (max-width: 767px) {
+  .score-form {
+    width: 80%;
   }
 }
 
@@ -258,24 +270,24 @@ h3 {
   margin-top: 5px;
 }
 
-.edit-form button,
-.edit-form input {
+.form button,
+.form input {
   box-sizing: border-box;
 }
 
-.edit-form button {
+.form button {
   margin-top: 30px;
   width: 100%;
 }
 
-.edit-form input {
+.form input {
   display: block;
   margin-top: 5px;
   margin-bottom: 20px;
   width: 100%;
 }
 
-.edit-form label {
+.form label {
 }
 
 /* ******** */
@@ -396,4 +408,83 @@ select {
 }
 .deactivate-user .card-title:hover p {
   color: var(--primary-color);
+}
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-select :last-child {
+  border-bottom: none;
+}
+
+.category-select h3 {
+  text-decoration: underline;
+  padding: 15px 80px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.category-select h3 {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.category-select h3:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  transition: color 0.3s ease; /* Jevn overgang */
+}
+
+.selected {
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
+}
+
+.selected h2,
+.selected p {
+  color: var(--secondary-color);
+}
+
+.point-select {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.point-select-item h2,
+.point-select-item p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.point-select-item {
+  border: 1px solid var(--primary-color);
+  border-radius: 15px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.point-select-item:hover {
+  background-color: var(--primary-color);
+}
+
+.point-select-item:hover h2,
+.point-select-item:hover p {
+  color: var(--secondary-color);
+  transition: color 0.3s ease; /* Jevn overgang */
 }

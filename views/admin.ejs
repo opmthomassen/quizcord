@@ -2,20 +2,31 @@
 
 <div class="hero"><h1>Admin</h1></div>
 <div class="center-wrap">
-  <h2>Divide and conquer</h2>
-  <label for="teamsSlider">Select number of teams</label>
-  <h3 id="teamCount">6</h3>
-  <input
-    type="range"
-    name="teamsSlider"
-    id="teamsSlider"
-    min="2"
-    max="<%=users.length%>"
-    class="teamsSlider"
-    value="<%=Math.floor(users.length/2)%>"
-  />
+  <h2>Game state: Active / Inactive</h2>
+  <p>Next team out is: x</p>
+  <h3>Team name</h3>
+  <form class="score-form" action="" method="">
+    <div class="vertical-flex">
+      <div class="category-select" id="category-select">
+        <% for(let category of categories) { %>
+        <h3 class="category-item"><%= category %></h3>
+        <% } %>
+      </div>
+    </div>
+    <div class="spacer"></div>
 
-  <button id="divideBtn" class="btn btn-primary">Divide</button>
+    <div class="point-select" id="point-select">
+        <div class="point-select-item"><h2>0</h2><p>points</p></div>
+        <div class="point-select-item"><h2>1</h2><p>points</p></div>
+        <div class="point-select-item"><h2>3</h2><p>points</p></div>
+        <div class="point-select-item"><h2>6</h2><p>points</p></div>
+    </div>
+    
+    <div class="wrapper horizonal-flex">
+    <div class="center-wrap">
+    <button id="divideBtn" class="btn btn-success">Submit score</button></div>
+  </form>
+</div>
 </div>
 <div class="spacer"></div>
 <h2>All users</h2>
@@ -45,30 +56,51 @@
 </div>
 
 <script>
-  let slider = document.getElementById("teamsSlider");
-  let output = document.getElementById("teamCount");
-  let divideBtn = document.getElementById("divideBtn");
-  output.innerHTML = slider.value; // Display the default slider value
-  let teamCount = output.innerHTML;
+  let categorySelect = document.getElementById("category-select");
 
-  // Update the current slider value (each time you drag the slider handle)
-  slider.oninput = function () {
-    output.innerHTML = this.value;
-    teamCount = this.value;
+  categorySelect.onclick = (event) => {
+    // Sjekk om klikket element er et <h3>
+    if (event.target.tagName === "H3") {
+      // Fjern klassen 'selected' fra alle <h3>-elementer
+      document.querySelectorAll(".category-item").forEach((item) => {
+        item.classList.remove("selected");
+      });
+
+      // Legg til klassen 'selected' på det klikkede elementet
+      event.target.classList.add("selected");
+
+      // Logg kategorien (valgfritt)
+      console.log("Selected category:", event.target.innerText);
+    }
   };
 
-  divideBtn.onclick = () => {
-    //window.location.href = `/populate/${slider.value}`;¨
-    run();
+  let pointSelect = document.getElementById("point-select");
+
+pointSelect.onclick = (event) => {
+  // Sjekk om det klikkede elementet eller en av dets foreldre er en point-select-item
+  const item = event.target.closest(".point-select-item");
+  if (item) {
+    // Fjern klassen 'selected' fra alle .point-select-item-elementer
+    document.querySelectorAll(".point-select-item").forEach((el) => {
+      el.classList.remove("selected");
+    });
+
+    // Legg til klassen 'selected' på den klikkede div'en
+    item.classList.add("selected");
+
+    // Hent verdien fra <h2> inne i den klikkede div'en
+    const value = item.querySelector("h2").innerText;
+    console.log("Selected value:", value);
+    }
   };
 
   function run() {
     let xhr = new XMLHttpRequest();
-    let url = `http://localhost:3000/test?teamCount=${teamCount}`;
+    let url = `http://localhost:3000/test?teamCount=`;
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
+        //console.log(this.responseText);
       }
     };
     xhr.send();
