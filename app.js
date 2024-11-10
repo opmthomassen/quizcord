@@ -14,6 +14,7 @@ const catchAsync = require("./utils/catchAsync");
 const { userSchema } = require("./schemas.js");
 const jotunFunc = require("./utils/jotun");
 const { Serializer } = require("v8");
+const categories = require("./utils/categories");
 
 const genders = ["♂ Male", "♀ Female"];
 
@@ -215,9 +216,16 @@ app.get(
   })
 );
 
-app.get("/admin", (req, res) => {
-  throw new ExpressError("You are not an admin!", 403);
-});
+app.get(
+  "/admin",
+  catchAsync(async (req, res) => {
+    //throw new ExpressError("You are not an admin!", 403);
+
+    const users = await User.find({});
+    const teams = await Team.find({});
+    res.render("admin", { users, teams });
+  })
+);
 
 app.get("/test", (req, res) => {
   console.log(req.query);

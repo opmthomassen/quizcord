@@ -3,6 +3,8 @@
   /*--secondary-color: #fcfbfc;*/
   --secondary-color: #faf8ef;
   --soft-white: #fcfbfc;
+  --warning-color: #e86966;
+  --success-color: #b4e866;
   --small-screen: 767px;
 }
 
@@ -250,7 +252,7 @@ h3 {
 
 .gender-select {
   width: 100%;
-  border: 2px solid black;
+  border: 2px solid var(--primary-color);
   outline: none;
   appearance: none;
   margin-top: 5px;
@@ -280,18 +282,6 @@ h3 {
 /* ELEMENTS */
 /* ******** */
 
-/* .btn {
-  background-color: var(--secondary-color);
-  border-radius: 25px;
-  padding: 10px 20px 10px 20px;
-}
-
-.btn:hover {
-  box-shadow: 5px 5px 0px black;
-  transition: box-shadow 0.2s;
-  cursor: pointer;
-} */
-
 .btn {
   background-color: var(--soft-white);
   border-radius: 25px;
@@ -302,7 +292,7 @@ h3 {
 }
 
 .btn:hover {
-  box-shadow: -5px 5px 0px black;
+  box-shadow: -5px 5px 0px var(--primary-color);
   transform: translate(5px, -5px); /* Flytt knappen  */
 }
 
@@ -315,17 +305,17 @@ h3 {
 .btn-warning {
   /* background-color: #f0c1c1; */
   border: 0px;
-  color: #e86966;
+  color: var(--warning-color);
   background-color: var(--secondary-color);
 }
 
 .btn-warning:hover {
-  border-bottom: 2px solid #e86966;
+  border-bottom: 2px solid var(--warning-color);
   padding-bottom: 2px;
   cursor: pointer;
 }
 .btn-save {
-  background-color: #beddb1;
+  background-color: var(--success-color);
 }
 
 input {
@@ -372,19 +362,26 @@ select {
   display: none;
 }
 
-.activate-user {
+.activate-user .card-title:hover,
+.deactivate-user .card-title:hover {
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
 }
 
-.activate-user {
+.activate-user .card-title:hover {
+  background-color: var(--success-color);
+  cursor: n-resize;
 }
 
-.deactivate-user:hover {
-  caret-color: red;
-  color: red;
+.deactivate-user .card-title:hover {
+  background-color: var(--warning-color);
   cursor: s-resize;
 }
 
-.activate-user:hover {
-  color: red;
-  cursor: n-resize;
+.activate-user .card-title:hover p {
+  color: var(--primary-color);
+}
+.deactivate-user .card-title:hover p {
+  color: var(--primary-color);
 }

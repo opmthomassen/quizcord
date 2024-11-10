@@ -1,0 +1,77 @@
+<%layout('layouts/boilerplate')%>
+
+<div class="hero"><h1>Admin</h1></div>
+<div class="center-wrap">
+  <h2>Divide and conquer</h2>
+  <label for="teamsSlider">Select number of teams</label>
+  <h3 id="teamCount">6</h3>
+  <input
+    type="range"
+    name="teamsSlider"
+    id="teamsSlider"
+    min="2"
+    max="<%=users.length%>"
+    class="teamsSlider"
+    value="<%=Math.floor(users.length/2)%>"
+  />
+
+  <button id="divideBtn" class="btn btn-primary">Divide</button>
+</div>
+<div class="spacer"></div>
+<h2>All users</h2>
+<a href="/users" class="link <%= users && users.length > 0 ? '' : 'hide' %>"
+  >View all <%=users.length%> users</a
+>
+<div class="wrapper">
+  <% for (let user of users){%>
+  <input
+    type="checkbox"
+    id="check-<%=user.name%>"
+    name="user[active]"
+    value="<%=user.name%>"
+  />
+  <label for="check-<%=user.name%>"><%=user.name%></label>
+  <% } %>
+</div>
+
+<h3>All teams</h3>
+<a href="/teams" class="link <%= teams && teams.length > 0 ? '' : 'hide' %>"
+  >View all teams</a
+>
+<div class="wrapper">
+  <% for (let team of teams){%>
+  <p><%=team.name%></p>
+  <%}%>
+</div>
+
+<script>
+  let slider = document.getElementById("teamsSlider");
+  let output = document.getElementById("teamCount");
+  let divideBtn = document.getElementById("divideBtn");
+  output.innerHTML = slider.value; // Display the default slider value
+  let teamCount = output.innerHTML;
+
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function () {
+    output.innerHTML = this.value;
+    teamCount = this.value;
+  };
+
+  divideBtn.onclick = () => {
+    //window.location.href = `/populate/${slider.value}`;¨
+    run();
+  };
+
+  function run() {
+    let xhr = new XMLHttpRequest();
+    let url = `http://localhost:3000/test?teamCount=${teamCount}`;
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+      }
+    };
+    xhr.send();
+  }
+  run();
+</script>

@@ -16,13 +16,14 @@
   </form>
 </section>
 
-<h3>Active roster</h3>
+<h3>Active roster: <%= activeUsers.length %></h3>
 <div class="wrapper">
   <% for(let user of activeUsers){ %>
 
   <div class="card">
     <a
       class="deactivate-user"
+      title="Deactivate user"
       href="/changeActiveStatus/<%=user.id%>?active=false"
     >
       <div class="card-title">
@@ -39,13 +40,14 @@
   </div>
   <%}%>
 </div>
-<h3>Inactive roster</h3>
+<h3>Legacy roster: <%= inactiveUsers.length %></h3>
 <div class="wrapper">
   <% for(let user of inactiveUsers){ %>
 
   <div class="card">
     <a
       class="activate-user"
+      title="Activate user"
       href="/changeActiveStatus/<%=user.id%>?active=true"
     >
       <div class="card-title">
