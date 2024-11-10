@@ -119,12 +119,12 @@ app.put(
   "/users/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { active } = req.body.user;
+    //const { active } = req.body.user;
+    const { name, age, gender } = req.body.user;
     const user = await User.findById(id);
-    // user.name = name ? name : user.name;
-    // user.age = age ? age : user.age;
-    // user.gender = gender ? gender : user.gender;
-    user.active = active ? active : user.active;
+    user.name = name;
+    user.age = age;
+    user.gender = gender;
 
     user.save();
     res.redirect("/users/");
