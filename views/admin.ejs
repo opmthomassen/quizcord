@@ -1,7 +1,6 @@
 <%layout('layouts/boilerplate')%>
 
 <div class="hero"><h1>Admin</h1></div>
-
 <div class="center-wrap">
   <h2>Divide and conquer</h2>
   <label for="teamsSlider">Select number of teams</label>
@@ -18,7 +17,6 @@
 
   <button id="divideBtn" class="btn btn-primary">Divide</button>
 </div>
-<div class="center-wrap">
   <h2>Game state: Active / Inactive</h2>
   <p>Next team out is: x</p>
   <h3>Team name</h3>
@@ -40,16 +38,15 @@
     </div>
     
     <div class="wrapper horizonal-flex">
-    <div class="center-wrap">
-    <button id="divideBtn" class="btn btn-success">Submit score</button></div>
+      <div class="center-wrap">
+        <button id="divideBtn" class="btn btn-success">Submit score</button>
+      </div>
+    </div>
   </form>
-</div>
-</div>
 <div class="spacer"></div>
 <h2>All users</h2>
 <a href="/users" class="link <%= users && users.length > 0 ? '' : 'hide' %>"
-  >View all <%=users.length%> users</a
->
+  >View all <%=users.length%> users</a>
 <div class="wrapper">
   <% for (let user of users){%>
   <input
@@ -112,6 +109,7 @@ pointSelect.onclick = (event) => {
   };
 
 
+
   let slider = document.getElementById("teamsSlider");
   let output = document.getElementById("teamCount");
   let divideBtn = document.getElementById("divideBtn");
@@ -120,28 +118,26 @@ pointSelect.onclick = (event) => {
 
   // Update the current slider value (each time you drag the slider handle)
   slider.oninput = function () {
-  console.log("Slider value changed:", this.value);
-  output.innerHTML = this.value;
-  teamCount = this.value;
+    output.innerHTML = this.value;
+    teamCount = this.value;
   };
-
 
   divideBtn.onclick = () => {
     //window.location.href = `/populate/${slider.value}`;¨
-    //run();
+    run();
   };
 
-  // function run() {
-  //   let xhr = new XMLHttpRequest();
-  //   let url = `http://localhost:3000/test?teamCount=${teamCount}`;
-  //   xhr.open("GET", url, true);
-  //   xhr.onreadystatechange = function () {
-  //     if (this.readyState == 4 && this.status == 200) {
-  //       console.log(this.responseText);
-  //     }
-  //   };
-  //   xhr.send();
-  // }
-  // run();
+  function run() {
+    let xhr = new XMLHttpRequest();
+    let url = `http://localhost:3000/test?teamCount=${teamCount}`;
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+      }
+    };
+    xhr.send();
+  }
+  run();
 
 </script>
