@@ -1,6 +1,23 @@
 <%layout('layouts/boilerplate')%>
 
 <div class="hero"><h1>Admin</h1></div>
+
+<div class="center-wrap">
+  <h2>Divide and conquer</h2>
+  <label for="teamsSlider">Select number of teams</label>
+  <h3 id="teamCount">6</h3>
+  <input
+    type="range"
+    name="teamsSlider"
+    id="teamsSlider"
+    min="2"
+    max="<%=users.length%>"
+    class="teamsSlider"
+    value="<%=Math.floor(users.length/2)%>"
+  />
+
+  <button id="divideBtn" class="btn btn-primary">Divide</button>
+</div>
 <div class="center-wrap">
   <h2>Game state: Active / Inactive</h2>
   <p>Next team out is: x</p>
@@ -94,16 +111,37 @@ pointSelect.onclick = (event) => {
     }
   };
 
-  function run() {
-    let xhr = new XMLHttpRequest();
-    let url = `http://localhost:3000/test?teamCount=`;
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        //console.log(this.responseText);
-      }
-    };
-    xhr.send();
-  }
-  run();
+
+  let slider = document.getElementById("teamsSlider");
+  let output = document.getElementById("teamCount");
+  let divideBtn = document.getElementById("divideBtn");
+  output.innerHTML = slider.value; // Display the default slider value
+  let teamCount = output.innerHTML;
+
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function () {
+  console.log("Slider value changed:", this.value);
+  output.innerHTML = this.value;
+  teamCount = this.value;
+  };
+
+
+  divideBtn.onclick = () => {
+    //window.location.href = `/populate/${slider.value}`;¨
+    //run();
+  };
+
+  // function run() {
+  //   let xhr = new XMLHttpRequest();
+  //   let url = `http://localhost:3000/test?teamCount=${teamCount}`;
+  //   xhr.open("GET", url, true);
+  //   xhr.onreadystatechange = function () {
+  //     if (this.readyState == 4 && this.status == 200) {
+  //       console.log(this.responseText);
+  //     }
+  //   };
+  //   xhr.send();
+  // }
+  // run();
+
 </script>
