@@ -3,19 +3,21 @@
 <div class="hero"><h1>QuizCord</h1></div>
 
 <div class="spacer"></div>
-<h2>All users</h2>
-<a href="/users" class="link <%= users && users.length > 0 ? '' : 'hide' %>"
-  >View all <%=users.length%> users</a
+<h2>All players</h2>
+<a
+  href="/players"
+  class="link <%= players && players.length > 0 ? '' : 'hide' %>"
+  >View all <%=players.length%> players</a
 >
 <div class="wrapper">
-  <% for (let user of users){%>
+  <% for (let player of players){%>
   <input
     type="checkbox"
-    id="check-<%=user.name%>"
-    name="user[active]"
-    value="<%=user.name%>"
+    id="check-<%=player.name%>"
+    name="player[active]"
+    value="<%=player.name%>"
   />
-  <label for="check-<%=user.name%>"><%=user.name%></label>
+  <label for="check-<%=player.name%>"><%=player.name%></label>
   <% } %>
 </div>
 

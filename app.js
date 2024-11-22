@@ -4,15 +4,18 @@ const path = require("path");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const Team = require("./models/team");
-const User = require("./models/user");
+const Player = require("./models/player.js");
+const User = require("./models/user.js");
+const session = require("express-session");
+const bcrypt = require("bcrypt");
 
 const { urlencoded } = require("express");
 const morgan = require("morgan");
 const engine = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const catchAsync = require("./utils/catchAsync");
-const { userSchema } = require("./schemas.js");
-const jotunFunc = require("./utils/jotun");
+const { playerSchema } = require("./schemas.js");
+const teamsFunc = require("./utils/teamDescFunc.js");
 const { Serializer } = require("v8");
 const { categories } = require("./utils/categories");
 
@@ -35,12 +38,23 @@ app.use(methodOverride("_method"));
 app.use(morgan("dev"));
 
 app.use(
+  session({
+    secret: "my_secret_is_alright",
+    resave: false, // Ikke lagre sesjonen på nytt hvis ingen endringer er gjort
+    saveUninitialized: false, // Ikke lagre en ny sesjon hvis det ikke er noe data
+    cookie: {
+      maxAge: 1000 * 60 * 60, // 1 time
+    },
+  })
+);
+
+app.use(
   "/favicon-dark.png",
   express.static(path.join(__dirname, "resources/favicon-dark.png"))
 );
 
-const validateUser = (req, res, next) => {
-  const { error } = userSchema.validate(req.body);
+const validatePlayer = (req, res, next) => {
+  const { error } = playerSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(msg, 400);
@@ -57,18 +71,18 @@ app.listen(3000, () => {
 app.get(
   "/",
   catchAsync(async (req, res) => {
-    const users = await User.find({});
+    const players = await Player.find({});
     const teams = await Team.find({});
-    res.render("home", { users, teams });
+    res.render("home", { players, teams });
   })
 );
 
 app.get(
-  "/users",
+  "/players",
   catchAsync(async (req, res) => {
-    const activeUsers = await User.find({ active: true });
-    const inactiveUsers = await User.find({ active: false });
-    res.render("users/", { activeUsers, inactiveUsers });
+    const activePlayers = await Player.find({ active: true });
+    const inactivePlayers = await Player.find({ active: false });
+    res.render("players/", { activePlayers, inactivePlayers });
   })
 );
 
@@ -78,71 +92,70 @@ app.get(
     console.log(req.params);
     const { id } = req.params;
     const { active } = req.query;
-    const user = await User.findById(id);
-    user.active = active;
-    user.save();
-    //const inactiveUsers = await User.find({ active: false });
-    res.redirect("/users/");
+    const player = await Player.findById(id);
+    player.active = active;
+    player.save();
+    //const inactivePlayer = await Player.find({ active: false });
+    res.redirect("/players/");
   })
 );
 
-// Add a new user
+// Add a new player
 app.post(
-  "/users",
-  validateUser,
+  "/players",
+  validatePlayer,
   catchAsync(async (req, res, next) => {
-    const { name } = req.body.user;
+    const { name } = req.body.player;
     const age = Math.floor(Math.random() * 99) + 1;
     const gender =
       Math.floor(Math.random() * 2) + 1 == 1 ? "♂ Male" : "♀ Female";
-    const user = new User({
+    const player = new Player({
       name: name,
       gender: gender,
       age: age,
       active: true,
     });
-    await user.save();
-    res.redirect("/users/");
+    await player.save();
+    res.redirect("/players/");
   })
 );
 
-// Display user specific info with edits.
+// Display player specific info with edits.
 app.get(
-  "/users/:id",
+  "/players/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const user = await User.findById(id);
-    if (!user) {
-      throw new ExpressError("User not found", 404);
+    const player = await Player.findById(id);
+    if (!player) {
+      throw new ExpressError("Player not found", 404);
     }
-    res.render("users/edit", { user, genders });
+    res.render("player/edit", { player, genders });
   })
 );
 
 // Save edit
 app.put(
-  "/users/:id",
+  "/players/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    //const { active } = req.body.user;
-    const { name, age, gender } = req.body.user;
-    const user = await User.findById(id);
-    user.name = name;
-    user.age = age;
-    user.gender = gender;
+    const { name, age, gender } = req.body.player;
+    const player = await Player.findById(id);
+    player.name = name;
+    player.age = age;
+    player.gender = gender;
 
-    user.save();
-    res.redirect("/users/");
+    player.save();
+    res.redirect("/players/");
   })
 );
 
-// Delete user
+// Delete player
 app.delete(
-  "/users/:id",
+  "/players/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    await User.findByIdAndDelete(id);
-    res.redirect("/users/");
+    await Player.findByIdAndDelete(id);
+    res.redirect("/players/");
   })
 );
 
@@ -193,11 +206,26 @@ app.get(
 app.post(
   "/teams/",
   catchAsync(async (req, res, next) => {
-    const { name, hex } = await jotunFunc();
+    const { name, hex } = await teamsFunc();
     const randomScore = Math.floor(Math.random() * 99);
     const team = new Team({ name, color: hex, score: randomScore });
     team.save();
 
+    res.redirect("/teams/");
+  })
+);
+
+// Save team edit
+app.put(
+  "/teams/:id",
+  catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    const { name, color } = req.body.team;
+    const team = await Team.findById(id);
+    team.name = name;
+    team.color = color;
+
+    team.save();
     res.redirect("/teams/");
   })
 );
@@ -207,13 +235,13 @@ app.get(
   "/populate/:teamCount",
   catchAsync(async (req, res, next) => {
     const { teamCount } = req.params;
-    let allUsers = await User.find();
+    let allPlayers = await Player.find();
 
-    const shuffledUsers = shuffleArray(allUsers);
-    //console.log(shuffledUsers);
+    const shuffledPlayers = shuffleArray(allPlayers);
+    //console.log(shuffledPlayers);
 
-    let restCounter = allUsers.length % teamCount; // rest
-    let basePerTeam = Math.floor(allUsers.length / teamCount); // base per team.
+    let restCounter = allPlayers.length % teamCount; // rest
+    let basePerTeam = Math.floor(allPlayers.length / teamCount); // base per team.
 
     for (let i = 0; i <= teamCount; i++) {}
 
@@ -224,11 +252,53 @@ app.get(
 app.get(
   "/admin",
   catchAsync(async (req, res) => {
-    //throw new ExpressError("You are not an admin!", 403);
+    if (!req.session.user_id) {
+      return res.send("You are not an admin");
+    } else {
+      const players = await Player.find({});
+      const teams = await Team.find({});
+      res.render("admin", { players, teams, categories });
+    }
+  })
+);
 
-    const users = await User.find({});
-    const teams = await Team.find({});
-    res.render("admin", { users, teams, categories });
+// ***********
+// ***LOGIN***
+// ***********
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+// Log in
+app.post(
+  "/login/",
+  catchAsync(async (req, res, next) => {
+    const { username, password } = req.body;
+    const user = await User.findAndValidate(username, password);
+
+    if (user) {
+      return res.send("Found user");
+    } else {
+      return res.send("didnt find user");
+    }
+  })
+);
+
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+// add new user
+app.post(
+  "/register/",
+  catchAsync(async (req, res, next) => {
+    const { username, password } = req.body;
+    const user = new User({ username, password });
+    await user.save();
+    req.session.user_id = user._id;
+    //res.redirect("/admin");
+    console.log("post:register");
   })
 );
 

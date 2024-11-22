@@ -126,12 +126,12 @@ h3 {
   display: block;
 }
 
-.user {
+.player {
   width: 50%;
 }
 
 @media (max-width: 767px) {
-  .user {
+  .player {
     width: 90%;
   }
 
@@ -184,13 +184,13 @@ h3 {
   font-size: 0.8em;
 }
 
-.card-title .user,
+.card-title .player,
 .card-title .team-name {
   color: var(--soft-white);
   margin: 0;
 }
 
-.card-title .user {
+.card-title .player {
   padding: 10px 0px 10px 20px;
 }
 
@@ -353,6 +353,10 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+input[type="color"] {
+  height: 50px;
+}
+
 select {
   padding: 10px 20px;
   border-radius: 25px;
@@ -386,27 +390,27 @@ select {
   display: none;
 }
 
-.activate-user .card-title:hover,
-.deactivate-user .card-title:hover {
+.activate-player .card-title:hover,
+.deactivate-player .card-title:hover {
   -webkit-transition: background-color 200ms linear;
   -ms-transition: background-color 200ms linear;
   transition: background-color 200ms linear;
 }
 
-.activate-user .card-title:hover {
+.activate-player .card-title:hover {
   background-color: var(--success-color);
   cursor: n-resize;
 }
 
-.deactivate-user .card-title:hover {
+.deactivate-player .card-title:hover {
   background-color: var(--warning-color);
   cursor: s-resize;
 }
 
-.activate-user .card-title:hover p {
+.activate-player .card-title:hover p {
   color: var(--primary-color);
 }
-.deactivate-user .card-title:hover p {
+.deactivate-player .card-title:hover p {
   color: var(--primary-color);
 }
 

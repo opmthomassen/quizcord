@@ -1,0 +1,24 @@
+<%layout('layouts/boilerplate')%>
+
+<h2>Sign up</h2>
+<a href="/">← Back home</a>
+<section class="top">
+  <h2>Sign up</h2>
+  <form action="/register" , method="POST">
+    <div>
+      <label for="username">Enter username</label>
+      <input type="text" name="username" id="username" placeholder="Username" />
+    </div>
+    <div>
+      <label for="password">Enter password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+      />
+    </div>
+    <button class="btn btn-primary">Sign up</button>
+  </form>
+  <a href="/login">Already have a user? Log in here</a>
+</section>

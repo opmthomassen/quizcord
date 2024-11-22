@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("./models/user");
+const Player = require("./models/player");
 const Team = require("./models/team");
 //const Jotun = require("./models/jotun");
 const TeamDescription = require("./models/teamDescription");
@@ -19,13 +19,13 @@ async function main() {
 const wipe = async () => {
   //await Jotun.deleteMany({});
   await TeamDescription.deleteMany({});
-  await User.deleteMany({});
   await Team.deleteMany({});
+  await Player.deleteMany({});
 };
 
 wipe();
 
-const users = [
+const players = [
   {
     name: "Fredrik",
     age: 23,
@@ -58,7 +58,7 @@ const users = [
   },
 ];
 
-User.insertMany(users);
+Player.insertMany(players);
 
 const jotunArr = [
   { name: "Comfort Grey", hex: "#BEB9AF" },

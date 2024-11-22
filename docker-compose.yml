@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    container_name: quizcord_container
+    ports:
+      - "3000:3000" # Tilgang til Node.js-appen på port 3000
+    depends_on:
+      - mongo # Garanter at MongoDB starter før appen
+  mongo:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017" # Tilgang til MongoDB på standardport
