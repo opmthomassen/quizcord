@@ -31,6 +31,10 @@ a:hover {
   padding-bottom: 2px;
 }
 
+.nav-links {
+  margin-top: 10px;
+}
+
 .nav-links a:hover {
   border-bottom: 2px solid black;
   padding-bottom: 2px;
@@ -61,7 +65,6 @@ h3 {
   width: 1200px;
   min-width: 200px;
   align-content: center;
-  padding: 20px;
 }
 
 .box {
@@ -77,6 +80,12 @@ h3 {
   text-align: right;
   position: relative;
   height: 50px;
+}
+
+.top-nav {
+  font-size: 0.8rem;
+  width: 100%;
+  text-align: right;
 }
 
 .logo {
@@ -101,7 +110,7 @@ h3 {
   height: 350px;
   width: 100%;
   background-image: radial-gradient(black 1px, transparent 0);
-  background-size: 10px 10px;
+  background-size: 6px 6px;
   background-position: -19px -19px;
   display: flex;
   align-items: center;

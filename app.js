@@ -284,6 +284,7 @@ app.post(
 
     if (foundUser) {
       req.session.user_id = foundUser._id;
+      req.session.username = foundUser.username;
       return res.redirect("admin");
     } else {
       return res.redirect("login");

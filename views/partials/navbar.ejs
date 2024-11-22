@@ -1,3 +1,10 @@
+<div class="top-nav">
+  <% if(session.user_id) { %>
+  <a href="#">Signed in as: <%=session.username %></a>
+  <% }else{ %>
+  <a href="/login" class="">Log in</a>
+  <% } %>
+</div>
 <nav class="navbar">
   <div>
     <span class="logo"><a href="/">QuizCord</a> </span>
@@ -9,7 +16,6 @@
       <% if(session.user_id) { %>
       <li><a href="/admin">Admin</a></li>
       <% } %>
-      <li><a href="/login">Log in</a></li>
     </ul>
   </div>
 </nav>
