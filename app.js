@@ -47,6 +47,10 @@ app.use(
     },
   })
 );
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 app.use(
   "/favicon-dark.png",
@@ -253,8 +257,9 @@ app.get(
   "/admin",
   catchAsync(async (req, res) => {
     if (!req.session.user_id) {
-      return res.send("You are not an admin");
+      return res.redirect("/login");
     } else {
+      console.log(req.session.user_id);
       const players = await Player.find({});
       const teams = await Team.find({});
       res.render("admin", { players, teams, categories });
@@ -275,12 +280,13 @@ app.post(
   "/login/",
   catchAsync(async (req, res, next) => {
     const { username, password } = req.body;
-    const user = await User.findAndValidate(username, password);
+    const foundUser = await User.findAndValidate(username, password);
 
-    if (user) {
-      return res.send("Found user");
+    if (foundUser) {
+      req.session.user_id = foundUser._id;
+      return res.redirect("admin");
     } else {
-      return res.send("didnt find user");
+      return res.redirect("login");
     }
   })
 );

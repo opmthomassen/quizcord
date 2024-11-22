@@ -6,7 +6,9 @@
       <li><a href="/teams">Teams</a></li>
       <li><a href="/statistics">Statistics</a></li>
       <li><a href="/history">History</a></li>
+      <% if(session.user_id) { %>
       <li><a href="/admin">Admin</a></li>
+      <% } %>
       <li><a href="/login">Log in</a></li>
     </ul>
   </div>
