@@ -1,0 +1,85 @@
+<%layout('layouts/boilerplate')%>
+
+<h2>Edit event</h2>
+<a href="/events">← Back to events</a>
+
+<div class="flex-grid">
+  <div class="col col-clean">
+    <img
+      class="event_image"
+      src="https://cdn.tixly.com/no/tix/EventImages/Event_<%=event.eventGroupId%>.jpg"
+      alt=""
+    />
+  </div>
+  <div class="col col-clean">
+    <div class="inner">
+      <h2><%=event.title%></h2>
+      <p>id: <%=event.eventGroupId%></p>
+      <p>date: <%=new Date(event.startDate).toLocaleDateString()%></p>
+      <div class="progress">
+        <div id="progressBar"></div>
+        <p id="progressInfo"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <p class="marketing-status">Marketing off</p>
+  <label class="switch">
+    <input type="checkbox" />
+    <span class="slider round"></span>
+  </label>
+</div>
+
+<div class="marketing">
+  <h3>Marketing options</h3>
+
+  <table>
+    <th>header</th>
+  </table>
+
+  <div class="flex-grid">
+    <div class="col">
+      <div class="inner">
+        <p class="marketing-status">Marketing off</p>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-grid">
+    <div class="col">This little piggy went to market.</div>
+  </div>
+
+  <div class="flex-grid">
+    <div class="col"></div>
+    <div class="col">
+      <div class="inner">
+        <h2><%=event.title%></h2>
+        <p>id: <%=event.eventGroupId%></p>
+        <p>date: <%=event.startDate%></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = (e) => {
+    const sold = "<%=event.sold%>";
+    const capacity = "<%=event.capacity%>";
+    const percentageSold = ((sold / capacity) * 100).toFixed(0); // Begrens til to desimaler
+
+    console.log("page is fully loaded");
+    const progressBar = document.getElementById("progressBar");
+    if (progressBar) {
+      progressBar.style.width = `${percentageSold}%`; // Prosent for CSS-bredde
+    }
+
+    const progressInfo = document.getElementById("progressInfo");
+    progressInfo.innerText = `Sold ${sold} of ${capacity} - ${percentageSold}%`;
+  };
+</script>

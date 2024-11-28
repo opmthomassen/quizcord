@@ -1,0 +1,59 @@
+<%layout('layouts/boilerplate')%>
+
+<h2>Upcoming events</h2>
+<a href="/">← Back home</a>
+<!-- 
+<table>
+  <thead>
+      <tr>
+          <th>Kolonne 1</th>
+          <th>Kolonne 2</th>
+          <th>Kolonne 3</th>
+          <th>Kolonne 4</th>
+          <th>Kolonne 5</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>
+          <td>Data 4</td>
+          <td>Data 5</td>
+      </tr>
+      <tr>
+          <td>Data 6</td>
+          <td>Data 7</td>
+          <td>Data 8</td>
+          <td>Data 9</td>
+          <td>Data 10</td>
+      </tr>
+      <tr>
+          <td>Data 11</td>
+          <td>Data 12</td>
+          <td>Data 13</td>
+          <td>Data 14</td>
+          <td>Data 15</td>
+      </tr>
+  </tbody>
+</table> -->
+<div class="wrapper">
+  <h1 class="headline">Upcoming events: <%= currentEvents.length %></h1>
+  <% for(let event of currentEvents){ %>
+  <a href="events/<%=event.id%>">
+    <div class="card">
+      <p>
+        <%=new Date(event.startDate).toLocaleDateString()%> //
+        <%=event.eventGroupId%>
+      </p>
+      <div class="card-title">
+        <h4 class=""><%=event.name%></h4>
+      </div>
+      <div class="card-body">
+        <h2><%=event.title%></h2>
+        <a href="/events/<%=event.id%>"><p class="edit-icon">edit</p></a>
+      </div>
+    </div>
+  </a>
+  <%}%>
+</div>

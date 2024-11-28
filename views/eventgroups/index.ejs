@@ -1,0 +1,38 @@
+<%layout('layouts/boilerplate')%>
+
+<h2>Eventgroups</h2>
+<a href="/">← Back home</a>
+<section class="top">
+  <h1>All eventgroups</h1>
+</section>
+
+<div class="wrapper">
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint explicabo
+    nostrum dignissimos saepe quam. Voluptas explicabo recusandae similique,
+    facere enim voluptate autem aut ad illo ea corporis minima nihil rem!
+  </p>
+</div>
+
+<h2>All events <%=eventGroups.length %></h2>
+
+<table class="table-large">
+  <thead>
+    <tr>
+      <th>_id</th>
+      <th>subtitle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(eventGroup of eventGroups) { %> <% %>
+    <tr>
+      <td><%= eventGroup._id %></td>
+      <td><%= eventGroup.title %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<script>
+  window.onload = (e) => {};
+</script>

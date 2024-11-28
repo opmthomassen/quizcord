@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const Team = require("./models/team");
 const Player = require("./models/player.js");
 const User = require("./models/user.js");
+const Event = require("./models/event");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 
@@ -24,6 +25,7 @@ const genders = ["♂ Male", "♀ Female"];
 main().catch((err) => console.log(err));
 
 async function main() {
+  await mongoose.connect("mongodb://127.0.0.1:27017/hubfast");
   await mongoose.connect("mongodb://127.0.0.1:27017/quizcord");
   console.log("Mongo connection open");
 }
@@ -57,6 +59,11 @@ app.use(
   express.static(path.join(__dirname, "resources/favicon-dark.png"))
 );
 
+app.use(
+  "/teamsilhouette.png",
+  express.static(path.join(__dirname, "resources/teamsilhouette.png"))
+);
+
 const validatePlayer = (req, res, next) => {
   const { error } = playerSchema.validate(req.body);
   if (error) {
@@ -75,18 +82,56 @@ app.listen(3000, () => {
 app.get(
   "/",
   catchAsync(async (req, res) => {
-    const players = await Player.find({});
-    const teams = await Team.find({});
-    res.render("home", { players, teams });
+    const today = new Date();
+    const events = await Event.find({});
+    const currentEvents = await Event.find({
+      startDate: { $gte: today },
+      title: { $not: /test/i },
+    });
+
+    // const formattedDate = `${String(date.getDate()).padStart(2, "0")}.${String(
+    //   date.getMonth() + 1
+    // ).padStart(2, "0")}.${date.getFullYear()}`;
+
+    res.render("home", { events, currentEvents });
   })
 );
 
 app.get(
-  "/players",
+  "/events",
   catchAsync(async (req, res) => {
-    const activePlayers = await Player.find({ active: true });
-    const inactivePlayers = await Player.find({ active: false });
-    res.render("players/", { activePlayers, inactivePlayers });
+    // For spesifikke datosøk:
+    //   startDate: { $gte: new Date("2024-11-11") },
+    // });
+    const today = new Date();
+    const currentEvents = await Event.find({
+      startDate: { $gte: today },
+      title: { $not: /test/i },
+    });
+
+    res.render("events", { currentEvents });
+  })
+);
+
+app.get(
+  "/events/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+    const date = event.startDate;
+    const formattedDate = `${String(date.getDate()).padStart(2, "0")}.${String(
+      date.getMonth() + 1
+    ).padStart(2, "0")}.${date.getFullYear()}`;
+
+    res.render("events/edit", { event, formattedDate });
+  })
+);
+
+app.get(
+  "/eventgroups",
+  catchAsync(async (req, res) => {
+    const EventGroups = await EventGroup.find({});
+    res.render("eventgroups", { EventGroups });
   })
 );
 
@@ -100,65 +145,6 @@ app.get(
     player.active = active;
     player.save();
     //const inactivePlayer = await Player.find({ active: false });
-    res.redirect("/players/");
-  })
-);
-
-// Add a new player
-app.post(
-  "/players",
-  validatePlayer,
-  catchAsync(async (req, res, next) => {
-    const { name } = req.body.player;
-    const age = Math.floor(Math.random() * 99) + 1;
-    const gender =
-      Math.floor(Math.random() * 2) + 1 == 1 ? "♂ Male" : "♀ Female";
-    const player = new Player({
-      name: name,
-      gender: gender,
-      age: age,
-      active: true,
-    });
-    await player.save();
-    res.redirect("/players/");
-  })
-);
-
-// Display player specific info with edits.
-app.get(
-  "/players/:id",
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const player = await Player.findById(id);
-    if (!player) {
-      throw new ExpressError("Player not found", 404);
-    }
-    res.render("player/edit", { player, genders });
-  })
-);
-
-// Save edit
-app.put(
-  "/players/:id",
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const { name, age, gender } = req.body.player;
-    const player = await Player.findById(id);
-    player.name = name;
-    player.age = age;
-    player.gender = gender;
-
-    player.save();
-    res.redirect("/players/");
-  })
-);
-
-// Delete player
-app.delete(
-  "/players/:id",
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    await Player.findByIdAndDelete(id);
     res.redirect("/players/");
   })
 );
@@ -179,77 +165,8 @@ app.get("/statistics", async (req, res) => {
 app.get(
   "/history/",
   catchAsync(async (req, res, next) => {
-    res.render("history/");
-  })
-);
-
-// ***********
-// ***TEAMS***
-// ***********
-
-// Show all teams
-app.get(
-  "/teams/",
-  catchAsync(async (req, res, next) => {
-    const teams = await Team.find({});
-    res.render("teams/", { teams });
-  })
-);
-
-// Show all teams
-app.get(
-  "/teams/:id",
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const team = await Team.findById(id);
-    res.render("teams/edit", { team });
-  })
-);
-
-// Generate team
-app.post(
-  "/teams/",
-  catchAsync(async (req, res, next) => {
-    const { name, hex } = await teamsFunc();
-    const randomScore = Math.floor(Math.random() * 99);
-    const team = new Team({ name, color: hex, score: randomScore });
-    team.save();
-
-    res.redirect("/teams/");
-  })
-);
-
-// Save team edit
-app.put(
-  "/teams/:id",
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const { name, color } = req.body.team;
-    const team = await Team.findById(id);
-    team.name = name;
-    team.color = color;
-
-    team.save();
-    res.redirect("/teams/");
-  })
-);
-
-// Populate teams
-app.get(
-  "/populate/:teamCount",
-  catchAsync(async (req, res, next) => {
-    const { teamCount } = req.params;
-    let allPlayers = await Player.find();
-
-    const shuffledPlayers = shuffleArray(allPlayers);
-    //console.log(shuffledPlayers);
-
-    let restCounter = allPlayers.length % teamCount; // rest
-    let basePerTeam = Math.floor(allPlayers.length / teamCount); // base per team.
-
-    for (let i = 0; i <= teamCount; i++) {}
-
-    res.redirect("/");
+    const events = await Event.find({});
+    res.render("history/", { events });
   })
 );
 

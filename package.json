@@ -10,7 +10,8 @@
     "method-override": "^3.0.0",
     "mongo": "^0.1.0",
     "mongoose": "^7.8.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "puppeteer": "^23.9.0"
   },
   "name": "crudmongo",
   "version": "1.0.0",

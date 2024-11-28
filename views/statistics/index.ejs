@@ -2,14 +2,6 @@
 
 <h2>All Statistics</h2>
 <a href="/">← Back home</a>
-<section class="top">
-  <h1>Enlight the Bright!</h1>
-  <button class="btn btn-primary" id="unlock">Knowledge me</button>
-</section>
-
-<div>
-  <canvas id="myChart"></canvas>
-</div>
 
 <p>
   Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint explicabo
@@ -17,44 +9,50 @@
   facere enim voluptate autem aut ad illo ea corporis minima nihil rem! lorem
 </p>
 
-<div>
-  <canvas id="colorChart"></canvas>
+<div class="flex-grid">
+  <div class="col"></div>
 </div>
 
-<p>
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint explicabo
-  nostrum dignissimos saepe quam. Voluptas explicabo recusandae similique,
-  facere enim voluptate autem aut ad illo ea corporis minima nihil rem! lorem
-</p>
+<div class="flex-grid">
+  <div class="col">
+    <div>
+      <canvas id="myBar"></canvas>
+    </div>
+  </div>
+  <div class="col">This little piggy had roast beef.</div>
+</div>
+<div class="flex-grid-three">
+  <div class="col">.</div>
+  <div class="col">.</div>
+  <div class="col">.</div>
+</div>
 
-<div>
-  <canvas id="radarChart"></canvas>
+<div class="flex-grid-two">
+  <div class="col">.</div>
+  <div class="col">.</div>
+</div>
+<div class="flex-grid">
+  <div class="col">.</div>
+  <div class="col">.</div>
+
+  <div class="col">.</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
   // Hent data fra EJS-variabler
-  let labels = "<%= labels %>";
-  let scores = "<%= scores  %>";
-  let colors = "<%= colors  %>";
 
-  labels = labels.split(",");
-  scores = scores.split(",");
-  colors = colors.split(",");
+  const ctx = document.getElementById("myBar");
 
-  // Konfigurer Chart.js
-  const ctx = document.getElementById("myChart").getContext("2d");
   new Chart(ctx, {
     type: "bar",
     data: {
-      labels: labels,
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
       datasets: [
         {
-          label: "Team score",
-          data: scores,
-          backgroundColor: colors,
-          borderColor: colors,
+          label: "# of Votes",
+          data: [12, 19, 3, 5, 2, 3],
           borderWidth: 1,
         },
       ],
@@ -67,55 +65,6 @@
       },
     },
   });
-
-  const colorChart = document.getElementById("colorChart").getContext("2d");
-  new Chart(colorChart, {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Team score",
-          data: scores,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-            "rgba(255, 205, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(105, 116, 119, 0.2)",
-            "rgba(201, 203, 207, 0.2)",
-          ],
-          borderColor: [
-            "rgb(255, 99, 132)",
-            "rgb(255, 159, 64)",
-            "rgb(255, 205, 86)",
-            "rgb(75, 192, 192)",
-            "rgb(54, 162, 235)",
-            "rgb(105, 116, 119)",
-            "rgb(201, 203, 207)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-
-  const kategorier = [
-    "Sport",
-    "Film, TV og serier",
-    "Musikk & litteratur",
-    "Geografi",
-    "Natur, historie og vitenskap",
-    "Lett blanding",
-  ];
 </script>
 
 <div class="wrapper">
