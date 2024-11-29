@@ -6,7 +6,7 @@ const matchSchema = new mongoose.Schema({
   teams: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Team",
     },
   ],
 });

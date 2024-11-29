@@ -5,7 +5,7 @@ const teamSchema = new Schema({
   name: String,
   color: String,
   icon: String,
-  score: Number,
+  score: Number, // fjerne score etterhvert.
   users: [
     {
       type: Schema.Types.ObjectId,
