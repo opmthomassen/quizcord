@@ -1,0 +1,45 @@
+<%layout('layouts/boilerplate')%>
+
+<h2>All teams</h2>
+<a href="/">← Back home</a>
+<section class="top">
+  <h1>Make a house a home!</h1>
+  <form action="/teams" method="POST">
+    <!-- <input
+      type="text"
+      placeholder="Name"
+      autofocus
+      required
+      name="team[name]"
+    /> -->
+    <button class="btn btn-primary">Create team</button>
+  </form>
+</section>
+
+<div class="wrapper">
+
+  <% for(let team of teams){ %>
+
+  <div class="card team-card">
+    <div class="card-title">
+      <div class="team-header">
+        <div
+          class="team-icon"
+          <% // @ts-ignore %>
+          style="background-color: <%= team.color %>"
+        ></div>
+        <p class="team-name">Team <%=team.name%></p>
+      </div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>Team name: <%=team.name%></li>
+        <li>Team color: <%=team.color%></li>
+        <li>Score: <%=team.score%></li>
+        <li>Team members: x</li>
+      </ul>
+      <a href="/teams/<%=team.id%>"><p class="edit-icon">edit</p></a>
+    </div>
+  </div>
+  <%}%>
+</div>

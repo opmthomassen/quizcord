@@ -1,84 +1,32 @@
 <%layout('layouts/boilerplate')%>
 
-<div class="hero">
-  <h1>Hubfast</h1>
-</div>
+<div class="hero"><h1>QuizCord</h1></div>
 
 <div class="spacer"></div>
-<h2>Current events <%=currentEvents.length %></h2>
-<table class="table-large">
-  <thead>
-    <tr>
-      <th>_id</th>
-      <th>Start Date</th>
-      <th>Title</th>
-      <th>Subtitle</th>
-      <th>Venue</th>
-      <th>Hall</th>
-      <th>Event Group ID</th>
-      <th>Event Group</th>
-      <th>Promoter</th>
-      <th>Categories</th>
-      <th>Sold</th>
-      <th>Capacity</th>
-      <th>%</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% for(event of currentEvents) { %>
-    <tr>
-      <td><%= event._id %></td>
-      <td><%= new Date(event.startDate).toLocaleDateString() %></td>
-      <td><%= event.title %></td>
-      <td><%= event.subtitle %></td>
-      <td><%= event.venue %></td>
-      <td><%= event.hall %></td>
-      <td><%= event.eventGroupId %></td>
-      <td><%= event.eventGroup %></td>
-      <td><%= event.promoter %></td>
-      <td><%= event.categories.toString() %></td>
-      <td><%= event.sold %></td>
-      <td><%= event.capacity %></td>
-      <td><%=((event.sold/event.capacity)*100).toFixed(0)%>%</td>
-    </tr>
-    <% } %>
-  </tbody>
-</table>
-<h2>All events <%=events.length %></h2>
+<h2>All players</h2>
+<a
+  href="/players"
+  class="link <%= players && players.length > 0 ? '' : 'hide' %>"
+  >View all <%=players.length%> players</a
+>
+<div class="wrapper">
+  <% for (let player of players){%>
+  <input
+    type="checkbox"
+    id="check-<%=player.name%>"
+    name="player[active]"
+    value="<%=player.name%>"
+  />
+  <label for="check-<%=player.name%>"><%=player.name%></label>
+  <% } %>
+</div>
 
-<table class="table-large">
-  <thead>
-    <tr>
-      <th>_id</th>
-      <th>Start Date</th>
-      <th>Title</th>
-      <th>Subtitle</th>
-      <th>Venue</th>
-      <th>Hall</th>
-      <th>Event Group ID</th>
-      <th>Event Group</th>
-      <th>Promoter</th>
-      <th>Sold</th>
-      <th>Capacity</th>
-      <th>Categories</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% for(event of events) { %>
-    <tr>
-      <td><%= event._id %></td>
-      <td><%= new Date(event.startDate).toLocaleDateString() %></td>
-      <td><%= event.title %></td>
-      <td><%= event.subtitle %></td>
-      <td><%= event.venue %></td>
-      <td><%= event.hall %></td>
-      <td><%= event.eventGroupId %></td>
-      <td><%= event.eventGroup %></td>
-      <td><%= event.promoter %></td>
-      <td><%= event.sold %></td>
-      <td><%= event.capacity %></td>
-      <td><%= event.categories.toString() %></td>
-    </tr>
-    <% } %>
-  </tbody>
-</table>
+<h3>All teams</h3>
+<a href="/teams" class="link <%= teams && teams.length > 0 ? '' : 'hide' %>"
+  >View all teams</a
+>
+<div class="wrapper">
+  <% for (let team of teams){%>
+  <p><%=team.name%></p>
+  <%}%>
+</div>

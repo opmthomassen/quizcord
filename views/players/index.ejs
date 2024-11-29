@@ -1,0 +1,67 @@
+<%layout('layouts/boilerplate')%>
+
+<h2>All players</h2>
+<a href="/">← Back home</a>
+<section class="top">
+  <h1>Strengthen the horde!</h1>
+  <form action="/players" method="POST">
+    <input
+      type="text"
+      placeholder="Name"
+      autofocus
+      required
+      name="player[name]"
+    />
+    <button class="btn btn-primary">Add player</button>
+  </form>
+</section>
+
+<h3>Active roster: <%= activePlayers.length %></h3>
+<div class="wrapper">
+  <% for(let player of activePlayers){ %>
+
+  <div class="card">
+    <a
+      class="deactivate-player"
+      title="Deactivate player"
+      href="/changeActiveStatus/<%=player.id%>?active=false"
+    >
+      <div class="card-title">
+        <p class="player"><%=player.name%></p>
+      </div></a
+    >
+    <div class="card-body">
+      <ul>
+        <li>Age: <%=player.age%></li>
+        <li>Gender: <%=player.gender%></li>
+      </ul>
+      <a href="/players/<%=player.id%>"><p class="edit-icon">edit</p></a>
+    </div>
+  </div>
+  <%}%>
+</div>
+<h3>Legacy roster: <%= inactivePlayers.length %></h3>
+<div class="wrapper">
+  <% for(let player of inactivePlayers){ %>
+
+  <div class="card">
+    <a
+      class="activate-player"
+      title="Activate player"
+      href="/changeActiveStatus/<%=player.id%>?active=true"
+    >
+      <div class="card-title">
+        <p class="player"><%=player.name%></p>
+      </div></a
+    >
+    <div class="card"></div>
+    <div class="card-body">
+      <ul>
+        <li>Age: <%=player.age%></li>
+        <li>Gender: <%=player.gender%></li>
+      </ul>
+      <a href="/players/<%=player.id%>"><p class="edit-icon">edit</p></a>
+    </div>
+  </div>
+  <%}%>
+</div>

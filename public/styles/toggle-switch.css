@@ -1,77 +1,65 @@
-/* The switch - the box around the slider */
-
-:root {
-  --primary: #ffffff;
-  /*--secondary: #fcfbfc;*/
-  --secondary: #0d0d10;
-  --soft-white: #e6e6e6;
-  --soft-gray: #a9aab3;
-  --primary-gray: #242428;
-  --border-color: #1a1a1e;
-  --dark-gray: #0e0e12;
-  --warning: #dba842;
-  --danger: #db4245;
-  --success: #42db7f;
-  --small-screen: 767px;
-}
+/* From Uiverse.io by andrew-demchenk0 */
 .switch {
+  --input-focus: #404040;
+  --bg-color: #fff;
+  --bg-color-alt: #666;
+  --main-color: #323232;
+  --input-out-of-focus: #ccc;
   position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 70px;
+  height: 36px;
+  transform: translateX(calc(50% - 10px));
 }
 
-/* Hide default HTML checkbox */
-.switch input {
+.toggle {
   opacity: 0;
-  width: 0;
-  height: 0;
 }
 
-/* The slider */
 .slider {
+  box-sizing: border-box;
+  border-radius: 100px;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--danger);
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  background-color: var(--input-out-of-focus);
+  transition: 0.3s;
 }
 
 .slider:before {
+  content: "off";
+  box-sizing: border-box;
+  height: 30px;
+  width: 30px;
   position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  left: 2px;
+  bottom: 1px;
+  border: 2px solid var(--main-color);
+  border-radius: 100px;
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 25px;
+  transition: 0.3s;
 }
 
-input:checked + .slider {
-  background-color: var(--success);
+.toggle:checked + .slider {
+  background-color: var(--input-focus);
+  transform: translateX(-32px);
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px var(--success);
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+.toggle:checked + .slider:before {
+  content: "on";
+  transform: translateX(32px);
 }

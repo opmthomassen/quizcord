@@ -3,7 +3,9 @@
 <h2>History</h2>
 <a href="/">← Back home</a>
 <section class="top">
-  <h1>All historic events</h1>
+  <h1>The log of life!</h1>
+
+  <button class="btn btn-primary">Primary button</button>
 </section>
 
 <div class="wrapper">
@@ -13,61 +15,3 @@
     facere enim voluptate autem aut ad illo ea corporis minima nihil rem!
   </p>
 </div>
-
-<h2>All events <%=events.length %></h2>
-
-<table class="table-large">
-  <thead>
-    <tr>
-      <th>_id</th>
-      <th>Start Date</th>
-      <th>Title</th>
-      <th>Subtitle</th>
-      <th>Venue</th>
-      <th>Hall</th>
-      <th>Event Group ID</th>
-      <th>Event Group</th>
-      <th>Promoter</th>
-      <th>Categories</th>
-      <th>Sold</th>
-      <th>Capacity</th>
-      <th>%</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% for(event of events) { %> <% %>
-    <tr>
-      <td><%= event._id %></td>
-      <td><%= new Date(event.startDate).toLocaleDateString() %></td>
-      <td><%= event.title %></td>
-      <td><%= event.subtitle %></td>
-      <td><%= event.venue %></td>
-      <td><%= event.hall %></td>
-      <td><%= event.eventGroupId %></td>
-      <td><%= event.eventGroup %></td>
-      <td><%= event.promoter %></td>
-      <td><%= event.categories.toString() %></td>
-      <td><%= event.sold %></td>
-      <td><%= event.capacity %></td>
-      <td><%= ((event.sold/event.capacity)*100).toFixed(0)%>%</td>
-    </tr>
-    <% } %>
-  </tbody>
-</table>
-
-<script>
-  window.onload = (e) => {
-    const sold = "<%=event.sold%>";
-    const capacity = "<%=event.capacity%>";
-    const percentageSold = ((sold / capacity) * 100).toFixed(0); // Begrens til to desimaler
-
-    console.log("page is fully loaded");
-    const progressBar = document.getElementById("progressBar");
-    if (progressBar) {
-      progressBar.style.width = `${percentageSold}%`; // Prosent for CSS-bredde
-    }
-
-    const progressInfo = document.getElementById("progressInfo");
-    progressInfo.innerText = `Sold ${sold} of ${capacity} - ${percentageSold}%`;
-  };
-</script>
